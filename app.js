@@ -4,9 +4,9 @@ const mysql = require('mysql');
 const dotenv = require('dotenv');
 const bcrypt = require('bcryptjs');
 
-if(process.env.NODE_ENV != "produccion") {
-    dotenv.config({ path: './.env' });
-}
+//if(process.env.NODE_ENV != "produccion") {
+    dotenv.config({ path: '.env' });
+//}
 
 
 const app = express();
@@ -28,9 +28,12 @@ app.use(
 /////////////COOKIE-SESSION//////////////////
 const cookieSession = require('cookie-session');
 app.use(cookieSession({
-    name: 'session',
-    keys: [process.env.SESSION_SECRET],
-    maxAge: 24 * 60 * 60 * 1000 // 24 horas
+    //name: 'session',
+    //keys: [process.env.SESSION_SECRET],
+    //maxAge: 24 * 60 * 60 * 1000 // 24 horas
+    secret: "secret",
+    resave: true,
+    saveUninitialized: true,
 }));
 
 //////////////////////////////////////////////
@@ -233,10 +236,10 @@ app.post('/usuarios/agregar', isAdmin, async (req, res) => {
 app.get('/logout', (req, res) => {
     req.session = null;
     // req.session.destroy((err) => {
-        if (err) {
-            console.log(err);
-            return res.redirect('/admin'); 
-        }
-        res.redirect('/login');
+        //if (err) {
+            //console.log(err);
+            //return res.redirect('/admin'); 
+        //}
+    res.redirect('/login');
     // });
 });
